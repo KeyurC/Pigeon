@@ -9,6 +9,7 @@ public interface Dao<E> {
     Transaction transaction = DBConnection.getTransaction();
 
     void save(E e);
+    E get(int id);
     void update(E e);
     void delete(E e);
 }
