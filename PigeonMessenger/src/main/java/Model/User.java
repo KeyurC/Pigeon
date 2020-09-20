@@ -1,4 +1,4 @@
-package Messaging;
+package Model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -7,7 +7,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "User")
-public class User extends Messages{
+public class User {
 
 
     @Id
