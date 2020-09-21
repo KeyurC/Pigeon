@@ -23,7 +23,8 @@ class UserImplTest {
         String username = "test_name";
         UserImpl.createUser(username);
         User user = (User) dao.getBasedOnUsername(username);
-        assertEquals(user.getUser_name(), username);
+        assertEquals(user.getUser_name(), username, "username retrieved should be same as " +
+                "username during object creation");
     }
 
 
