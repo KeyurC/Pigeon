@@ -1,5 +1,6 @@
-package DAO;
+package DAO.IDAO;
 
+import DAO.IDAO.Dao;
 import Model.MessageStatus;
 
 public class MessageStatusDao implements Dao<MessageStatus> {

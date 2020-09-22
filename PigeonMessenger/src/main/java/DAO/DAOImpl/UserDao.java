@@ -1,19 +1,15 @@
-package DAO;
+package DAO.IDAO;
 
-import Hibernate.DBConnection;
+import DAO.IDAO.Dao;
+import DAO.IDAO.IUserDao;
 import Model.User;
-import org.hibernate.Criteria;
-import org.hibernate.query.Query;
-import org.hibernate.type.IntegerType;
-import org.hibernate.type.StringType;
+import org.hibernate.Transaction;
 
 import javax.persistence.NoResultException;
-import javax.print.attribute.standard.Severity;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class UserDao implements Dao<User>{
+public class UserDao implements Dao<User>, IUserDao {
     private Logger logger = Logger.getAnonymousLogger();
 
     @Override
@@ -22,6 +18,7 @@ public class UserDao implements Dao<User>{
 
         if (user == null) {
             session.save(e);
+            Transaction transaction = session.beginTransaction();
             transaction.commit();
         } else {
             logger.log(Level.INFO, "User already exists");
@@ -34,6 +31,7 @@ public class UserDao implements Dao<User>{
 
     }
 
+    @Override
     public Model.User getBasedOnUsername(String username) {
         try {
             User user = (User) session.createNativeQuery(
@@ -43,7 +41,7 @@ public class UserDao implements Dao<User>{
 
             return user;
         } catch (NoResultException e) {
-            logger.log(Level.INFO, "User does not exist",e);
+            logger.log(Level.INFO, "User does not exist");
             return null;
         }
 
@@ -59,6 +57,7 @@ public class UserDao implements Dao<User>{
     @Override
     public void delete(Model.User e) {
         session.delete(e);
+        Transaction transaction = session.beginTransaction();
         transaction.commit();
     }
 }

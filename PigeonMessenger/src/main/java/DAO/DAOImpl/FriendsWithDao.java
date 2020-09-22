@@ -1,19 +1,33 @@
-package DAO;
+package DAO.IDAO;
 
+import DAO.IDAO.Dao;
+import DAO.IDAO.IFriendsWithDao;
 import Model.FriendsWith;
-import Model.User;
+import org.hibernate.Transaction;
 
 import javax.persistence.NoResultException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class FriendsWithDao implements Dao<FriendsWith> {
+public class FriendsWithDao implements Dao<FriendsWith>, IFriendsWithDao {
     private Logger logger = Logger.getAnonymousLogger();
 
     @Override
     public void save(FriendsWith e) {
-        session.save(e);
-        transaction.commit();
+        int userID = e.getUserID();
+        int friendID = e.getFriendID();
+        FriendsWith result = getByFriends(userID,friendID);
+        if (result == null) {
+            try {
+                session.save(e);
+                Transaction transaction = session.beginTransaction();
+                transaction.commit();
+            } catch (Exception ex) {
+                logger.log(Level.SEVERE,"Failed to save friend relationship",ex);
+            };
+        } else {
+            logger.log(Level.FINEST,"Friend relationship already exists");
+        }
     }
 
     @Override
@@ -21,6 +35,7 @@ public class FriendsWithDao implements Dao<FriendsWith> {
         return session.get(FriendsWith.class,id);
     }
 
+    @Override
     public FriendsWith getByFriends(int userID, int friendID) {
         try {
             FriendsWith request =
@@ -39,6 +54,7 @@ public class FriendsWithDao implements Dao<FriendsWith> {
     @Override
     public void update(FriendsWith friend) {
         session.update(friend);
+        Transaction transaction = session.beginTransaction();
         transaction.commit();
     }
 

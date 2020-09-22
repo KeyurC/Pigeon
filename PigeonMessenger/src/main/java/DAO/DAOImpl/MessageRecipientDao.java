@@ -1,5 +1,6 @@
-package DAO;
+package DAO.IDAO;
 
+import DAO.IDAO.Dao;
 import Model.MessageRecipient;
 
 public class MessageRecipientDao implements Dao<MessageRecipient> {
