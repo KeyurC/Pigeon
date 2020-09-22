@@ -1,4 +1,4 @@
-package DAO.IDAO;
+package DAO.DAOImpl;
 
 import DAO.IDAO.Dao;
 import DAO.IDAO.IUserDao;
