@@ -1,7 +1,7 @@
 package Impl;
 
-import DAO.Dao;
-import DAO.UserDao;
+import DAO.IDAO.Dao;
+import DAO.DAOImpl.UserDao;
 import Model.User;
 
 public class UserImpl {
