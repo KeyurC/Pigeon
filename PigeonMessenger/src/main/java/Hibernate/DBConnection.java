@@ -8,12 +8,8 @@ import org.hibernate.query.Query;
 
 public class DBConnection {
 
-    private static Transaction transaction;
     private static Session session;
 
-    public static Transaction getTransaction() {
-        return transaction;
-    }
 
     public static Session getSession() {
         return session;
@@ -22,7 +18,7 @@ public class DBConnection {
     public DBConnection() {
         session = new Configuration().
                 configure().buildSessionFactory().openSession();
-        transaction = session.beginTransaction();
+
     }
 
 }
