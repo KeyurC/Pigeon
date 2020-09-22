@@ -1,5 +1,6 @@
 package DAO;
 
+import DAO.DAOImpl.UserDao;
 import Hibernate.DBConnection;
 import org.junit.jupiter.api.*;
 
@@ -7,7 +8,7 @@ import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class UserTest {
+class UserDaoTest {
     static UserDao userDao;
 
     @BeforeAll
