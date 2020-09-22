@@ -1,15 +1,42 @@
-package DAO;
+package DAO.IDAO;
 
 import Hibernate.DBConnection;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 
+/**
+ * General Interface for all Data Access
+ * Objects with common methods
+ * @param <E> Generic Object as implementing classes
+ *           will use different models.
+ */
 public interface Dao<E> {
-    Session session = DBConnection.getSession();
-    Transaction transaction = DBConnection.getTransaction();
 
+    Session session = DBConnection.getSession();
+
+    /**
+     * Method saves object to the database
+     * @param e Model
+     */
     void save(E e);
+
+    /**
+     * Retrieves a object from database based
+     * on primary key e.g ID
+     * @param id Primary Key
+     * @return Model Object
+     */
     E get(int id);
+
+    /**
+     * Method updates an existing object in the DB,
+     * with altered version of the object.
+     * @param e Model
+     */
     void update(E e);
+
+    /**
+     * Removes the object from the DB
+     * @param e Model
+     */
     void delete(E e);
 }
