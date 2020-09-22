@@ -1,7 +1,6 @@
 package Impl;
 
-import DAO.Dao;
-import DAO.UserDao;
+import DAO.DAOImpl.UserDao;
 import Hibernate.DBConnection;
 import Model.User;
 import org.junit.jupiter.api.BeforeAll;
@@ -20,7 +19,7 @@ class UserImplTest {
 
     @Test
     void createUser() {
-        String username = "test_name";
+        String username = "test_name2";
         UserImpl.createUser(username);
         User user = (User) dao.getBasedOnUsername(username);
         assertEquals(user.getUser_name(), username, "username retrieved should be same as " +
