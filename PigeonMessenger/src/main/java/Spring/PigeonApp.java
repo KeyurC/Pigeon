@@ -1,6 +1,6 @@
 package Spring;
 
-import Hibernate.DBConnection;
+import Hibernate.HibernateUtil;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -8,6 +8,5 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class PigeonApp {
     public static void main(String[] args) {
         SpringApplication.run(PigeonApp.class);
-        new DBConnection();
     }
 }

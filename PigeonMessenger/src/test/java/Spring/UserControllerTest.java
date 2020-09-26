@@ -7,7 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import org.apache.log4j.Logger;
 
-import Hibernate.DBConnection;
+import Hibernate.HibernateUtil;
 import Model.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -50,7 +50,6 @@ public class UserControllerTest {
     public void createUser() {
         String username = "SpringTestUser";
         try {
-            new DBConnection();
             User user = new User();
 
             user.setUser_name(username);
