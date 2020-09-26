@@ -6,19 +6,18 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 
-public class DBConnection {
-
+public class HibernateUtil {
+    private HibernateUtil instance = new HibernateUtil();
     private static Session session;
 
-
-    public static Session getSession() {
-        return session;
-    }
-
-    public DBConnection() {
+    private HibernateUtil() {
         session = new Configuration().
                 configure().buildSessionFactory().openSession();
 
+    }
+
+    public static Session getSession() {
+        return session;
     }
 
 }
