@@ -2,7 +2,9 @@ package DAO.DAOImpl;
 
 import DAO.IDAO.Dao;
 import DAO.IDAO.IUserDao;
+import Hibernate.HibernateUtil;
 import Model.User;
+import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import javax.persistence.NoResultException;
@@ -17,6 +19,7 @@ public class UserDao implements Dao<User>, IUserDao {
         User user = getBasedOnUsername(e.getUser_name());
 
         if (user == null) {
+            Session session = HibernateUtil.getSession();
             session.save(e);
             Transaction transaction = session.beginTransaction();
             transaction.commit();
@@ -27,6 +30,7 @@ public class UserDao implements Dao<User>, IUserDao {
 
     @Override
     public Model.User get(int userID) {
+        Session session = HibernateUtil.getSession();
         return (Model.User) session.get(User.class,userID);
 
     }
@@ -34,6 +38,7 @@ public class UserDao implements Dao<User>, IUserDao {
     @Override
     public Model.User getBasedOnUsername(String username) {
         try {
+            Session session = HibernateUtil.getSession();
             User user = (User) session.createNativeQuery(
                     "SELECT * FROM User WHERE userName = '"+ username+"'",
                     User.class
@@ -56,6 +61,7 @@ public class UserDao implements Dao<User>, IUserDao {
 
     @Override
     public void delete(Model.User e) {
+        Session session = HibernateUtil.getSession();
         session.delete(e);
         Transaction transaction = session.beginTransaction();
         transaction.commit();

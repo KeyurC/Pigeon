@@ -1,7 +1,7 @@
 package DAO;
 
 import DAO.DAOImpl.UserDao;
-import Hibernate.DBConnection;
+import Hibernate.HibernateUtil;
 import org.junit.jupiter.api.*;
 
 
@@ -13,7 +13,6 @@ class UserDaoTest {
 
     @BeforeAll
     public static void init() {
-        DBConnection con = new DBConnection();
         userDao = new UserDao();
     }
 

@@ -1,17 +1,12 @@
 package Impl;
 
-import Hibernate.DBConnection;
+import Hibernate.HibernateUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class FriendImplTest {
-
-    @BeforeEach
-    void setUp() {
-        new DBConnection();
-    }
 
     @Test
     void sendRequest() {

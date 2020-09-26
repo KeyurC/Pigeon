@@ -2,7 +2,7 @@ package DAO;
 
 import DAO.DAOImpl.FriendsWithDao;
 import DAO.DAOImpl.UserDao;
-import Hibernate.DBConnection;
+import Hibernate.HibernateUtil;
 import Model.FriendsWith;
 import Model.User;
 import org.junit.jupiter.api.*;
@@ -14,7 +14,7 @@ class FriendsWithDaoTest {
 
     @BeforeAll
     static void setUp() throws InterruptedException {
-        new DBConnection();
+
         User user = new User();
         User user1 = new User();
         UserDao userDao = new UserDao();

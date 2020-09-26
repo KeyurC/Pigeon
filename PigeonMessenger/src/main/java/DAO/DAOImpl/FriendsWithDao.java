@@ -2,7 +2,9 @@ package DAO.DAOImpl;
 
 import DAO.IDAO.Dao;
 import DAO.IDAO.IFriendsWithDao;
+import Hibernate.HibernateUtil;
 import Model.FriendsWith;
+import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import javax.persistence.NoResultException;
@@ -19,6 +21,7 @@ public class FriendsWithDao implements Dao<FriendsWith>, IFriendsWithDao {
         FriendsWith result = getByFriends(userID,friendID);
         if (result == null) {
             try {
+                Session session = HibernateUtil.getSession();
                 session.save(e);
                 Transaction transaction = session.beginTransaction();
                 transaction.commit();
@@ -32,12 +35,14 @@ public class FriendsWithDao implements Dao<FriendsWith>, IFriendsWithDao {
 
     @Override
     public FriendsWith get(int id) {
+        Session session = HibernateUtil.getSession();
         return session.get(FriendsWith.class,id);
     }
 
     @Override
     public FriendsWith getByFriends(int userID, int friendID) {
         try {
+            Session session = HibernateUtil.getSession();
             FriendsWith request =
                     session.createNativeQuery
                             ("SELECT * FROM FriendsWith where UserID = "+userID+" and FriendID = "+friendID+"; ",
@@ -53,6 +58,7 @@ public class FriendsWithDao implements Dao<FriendsWith>, IFriendsWithDao {
 
     @Override
     public void update(FriendsWith friend) {
+        Session session = HibernateUtil.getSession();
         session.update(friend);
         Transaction transaction = session.beginTransaction();
         transaction.commit();
