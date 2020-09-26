@@ -9,13 +9,10 @@ public class UserImpl {
     /**
      * Creates a new User object and saves the user to
      * the database using the DAO.
-     * @param name
+     * @param user User Model object
      */
-    public static void createUser(String name) {
+    public static void createUser(User user) {
         Dao userDao = new UserDao();
-        User user = new User();
-
-        user.setUser_name(name);
         userDao.save(user);
 
 
