@@ -1,9 +1,13 @@
 package Model;
 
+import com.google.gson.JsonObject;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.HashMap;
+import java.util.Map;
 
 @Entity
 @Table(name = "User")
@@ -36,5 +40,28 @@ public class User {
 
     public String getUser_name() {
         return user_name;
+    }
+
+    public String usernameToJson() {
+        Map<String,String> userAtt = new HashMap<String, String>();
+        userAtt.put("user_name",user_name);
+        return buildJsonObject(userAtt);
+    }
+
+    @Override
+    public String toString() {
+        Map<String,String> userAtt = new HashMap<String, String>();
+        userAtt.put("user_id",Integer.toString(user_id));
+        userAtt.put("user_name",user_name);
+        userAtt.put("status",Boolean.toString(status));
+
+        return buildJsonObject(userAtt);
+    }
+
+    private String buildJsonObject(Map<String,String> userAtt) {
+        JsonObject json = new JsonObject();
+        userAtt.forEach(json::addProperty);
+
+        return json.toString();
     }
 }
