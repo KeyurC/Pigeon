@@ -54,10 +54,10 @@ public class UserControllerTest {
 
             user.setUser_name(username);
             MockHttpServletResponse result = this.mockMvc.perform(post("/createUser")
-                    .flashAttr("user", user))
+                    .content(user.usernameToJson()))
                     .andReturn()
                     .getResponse();
-            assertEquals(result.getContentAsString(),username);
+            assertEquals(result.getContentAsString(),"Success");
         } catch (Exception e) {
             logger.error("createUser: MockMVC failed to post " +
                     "or retrieve content of responseBody",e);
