@@ -7,6 +7,8 @@ import Model.FriendsWith;
 import Model.User;
 import org.junit.jupiter.api.*;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -77,5 +79,15 @@ class FriendsWithDaoTest {
     @Order(5)
     @Test
     void delete() {
+    }
+
+    @Order(6)
+    @Test
+    void getAllFriends() {
+        FriendsWithDao dao = new FriendsWithDao();
+        List<User> friendsList = dao.getAllUserFriends(1);
+        User tmpUser = friendsList.get(0);
+        assertEquals(tmpUser.getUser_name(), "test_name","getAllFriends: Username retrieved from friendslist does not match friend assigned");
+
     }
 }

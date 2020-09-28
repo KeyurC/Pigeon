@@ -4,15 +4,17 @@ import DAO.IDAO.Dao;
 import DAO.IDAO.IFriendsWithDao;
 import Hibernate.HibernateUtil;
 import Model.FriendsWith;
+import Model.User;
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import javax.persistence.NoResultException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.ArrayList;
+import java.util.List;
 
 public class FriendsWithDao implements Dao<FriendsWith>, IFriendsWithDao {
-    private Logger logger = Logger.getAnonymousLogger();
+    private static Logger logger = Logger.getLogger(FriendsWithDao.class);
 
     @Override
     public void save(FriendsWith e) {
@@ -26,10 +28,10 @@ public class FriendsWithDao implements Dao<FriendsWith>, IFriendsWithDao {
                 Transaction transaction = session.beginTransaction();
                 transaction.commit();
             } catch (Exception ex) {
-                logger.log(Level.SEVERE,"Failed to save friend relationship",ex);
+                logger.error("Failed to save friend relationship",ex);
             };
         } else {
-            logger.log(Level.FINEST,"Friend relationship already exists");
+            logger.warn("Friend relationship already exists");
         }
     }
 
@@ -51,9 +53,34 @@ public class FriendsWithDao implements Dao<FriendsWith>, IFriendsWithDao {
 
             return request;
         } catch (NoResultException e) {
-            logger.log(Level.FINEST, "Friendship pair do not exist",e);
+            logger.error("Friendship pair does not exist" ,e);
             return null;
         }
+    }
+
+    @Override
+    public List<User> getAllUserFriends(int userID) {
+        try {
+            Session session = HibernateUtil.getSession();
+            List<Integer> friendIDs = session.createNativeQuery
+                    ("SELECT FriendID FROM FriendsWith where UserID = "+userID+"; ")
+                    .getResultList();
+
+            List<User> friendsList = new ArrayList<User>();
+
+            if (!friendIDs.isEmpty()) {
+                UserDao dao = new UserDao();
+                for (int i = 0; i < friendIDs.size(); i++) {
+                    User tmpUser = dao.get(friendIDs.get(i));
+                    friendsList.add(tmpUser);
+                }
+            }
+
+            return friendsList;
+        } catch (Exception e) {
+            logger.error("Failed to retrieve friendlist, may be a type error", e);
+        }
+        return null;
     }
 
     @Override
