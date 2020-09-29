@@ -2,17 +2,36 @@ import React, { Component } from "react";
 import Friend from "./Friend";
 
 import "./Messenger.css";
+import Axios from "axios";
 
 class Friends extends Component {
   state = {
-    friendList: [
-      { id: 1, name: "test", lastMessage: "text" },
-      { id: 2, name: "tes2t_name", lastMessage: "text" }
-    ]
+    friendsList: []
   };
 
   componentDidMount() {
-    
+    const user = this.props.user;
+    Axios.get("http://localhost:8080/getAllFriends", {
+      params: {
+        username: user
+      }
+    }).then(
+      res => {
+        let friends = res.data;
+        const friendsList = [];
+
+        for (let i = 0; i < friends.length; i++) {
+          let friend = friends[i].split(",");
+          let friendJson = { id: friend[0], name: friend[1], lastMessage: "text" };
+          friendsList.push(friendJson);
+        }
+        
+        this.setState( { friendsList })
+      },
+      err => {
+        console.log(err);
+      }
+    );
   }
 
   render() {
@@ -23,9 +42,13 @@ class Friends extends Component {
             <div className="inbox_people">
               <div className="headind_srch"></div>
               <div className="inbox_chat">
-                  {this.state.friendList.map(friend => (
-                    <Friend key={friend.id} name={friend.name} msg={friend.lastMessage}/>
-                  ))}
+                {this.state.friendsList.map(friend => (
+                  <Friend
+                    key={friend.id}
+                    name={friend.name}
+                    msg={friend.lastMessage}
+                  />
+                ))}
               </div>
             </div>
           </div>
