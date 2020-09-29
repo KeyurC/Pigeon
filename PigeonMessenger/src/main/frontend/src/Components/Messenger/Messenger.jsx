@@ -9,7 +9,7 @@ class Messenger extends Component {
     return (
       <React.Fragment>
         <div className="container-fluid p-0 m-0">
-          <Friends />
+          <Friends user={this.props.history.location.state.user_name}/>
         </div>
       </React.Fragment>
     );
