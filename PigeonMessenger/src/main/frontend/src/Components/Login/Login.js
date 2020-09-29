@@ -4,9 +4,8 @@ import Axios from 'axios';
 import "./Login.css"
 
 class Login extends Component {
-  handleLogin = () => {
-    let postdata = new URLSearchParams();
 
+  handleLogin = () => {
     const postURL = "http://localhost:8080/createUser";
     const username = document.getElementById("username").value;
 
@@ -15,8 +14,8 @@ class Login extends Component {
     }).then(res => {
       console.log(res);
       console.log(res.data);
+      this.props.history.push("/Messages",{user_name:username})
     })
-    console.log(username);
   }
 
   render() { 
@@ -26,13 +25,10 @@ class Login extends Component {
           <div className="box">
             <h2> Pigeon Messenger </h2>
           </div>
-
-          <div
-          >
+          <div>
             <input id = "username" field="" type="text" />
             <button onClick ={this.handleLogin}  value="Submit">
-              {" "}
-              Submit{" "}
+              Submit
             </button>
           </div>
         </div> 
