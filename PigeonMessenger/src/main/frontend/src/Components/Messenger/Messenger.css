@@ -19,7 +19,16 @@ By Sunil8107
 .srch_bar {
   display: inline-block;
   text-align: right;
-  width: 60%; padding:
+  width: 100%;
+}
+
+.chat_date {
+  font-size: 20px !important;
+}
+
+.headind_srch2{ padding:0px 0px 0px 10px; overflow:hidden; border-bottom:1px solid #c4c4c4;}
+.headind_srch2 p {
+  margin-bottom: 0px !important;
 }
 .headind_srch{ padding:10px 29px 10px 20px; overflow:hidden; border-bottom:1px solid #c4c4c4;}
 
@@ -28,7 +37,7 @@ By Sunil8107
   font-size: 21px;
   margin: auto;
 }
-.srch_bar input{ border:1px solid #cdcdcd; border-width:0 0 1px 0; width:80%; padding:2px 0 4px 6px; background:none;}
+.srch_bar input{ border:1px solid #cdcdcd; border-width:0 0 1px 0; width:100%; padding:2px 0 4px 6px; background:none;}
 .srch_bar .input-group-addon button {
   background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
   border: medium none;
@@ -36,7 +45,7 @@ By Sunil8107
   color: #707070;
   font-size: 18px;
 }
-.srch_bar .input-group-addon { margin: 0 0 0 -27px;}
+
 
 .chat_ib h5{ font-size:15px; color:#464646; margin:0 0 8px 0;}
 .chat_ib h5 span{ font-size:13px; float:right;}
@@ -47,7 +56,7 @@ By Sunil8107
 }
 .chat_ib {
   float: left;
-  padding: 0 0 0 15px;
+  /* padding: 0 0 0 15px; */
   width: 88%;
 }
 
