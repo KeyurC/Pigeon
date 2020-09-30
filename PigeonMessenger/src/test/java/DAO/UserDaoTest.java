@@ -61,4 +61,11 @@ class UserDaoTest {
     @Order(6)
     void delete() {
     }
+
+    @Order(7)
+    @Test
+    void getUserList() {
+        UserDao dao = new UserDao();
+        assertTrue(dao.getUserList("test").size() > 0, "Failed to retrieve similar names");
+    }
 }
