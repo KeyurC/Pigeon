@@ -55,9 +55,9 @@ class FriendsWithDaoTest {
     @Test
     void getByFriends() {
         FriendsWithDao dao = new FriendsWithDao();
-        FriendsWith friend = dao.getByFriends(1,2);
+        FriendsWith friend = dao.getByFriends(1, 2);
         int userID = friend.getUserID();
-        assertEquals(userID,1,
+        assertEquals(userID, 1,
                 "Pass means integrity of object is confirmed");
     }
 
@@ -72,7 +72,7 @@ class FriendsWithDaoTest {
 
         friend = dao.get(1);
         System.out.println(friend.getUserID());
-        assertEquals(friend.getFriendStatus(),1);
+        assertEquals(friend.getFriendStatus(), 1);
 
     }
 
@@ -87,7 +87,8 @@ class FriendsWithDaoTest {
         FriendsWithDao dao = new FriendsWithDao();
         List<User> friendsList = dao.getAllUserFriends(1);
         User tmpUser = friendsList.get(0);
-        assertEquals(tmpUser.getUser_name(), "test_name","getAllFriends: Username retrieved from friendslist does not match friend assigned");
+        assertEquals(tmpUser.getUser_name(), "test_name", "getAllFriends: Username retrieved from friendslist does not match friend assigned");
 
     }
+
 }

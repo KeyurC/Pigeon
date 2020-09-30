@@ -10,6 +10,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import javax.persistence.NoResultException;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,12 +59,14 @@ public class FriendsWithDao implements Dao<FriendsWith>, IFriendsWithDao {
         }
     }
 
+
     @Override
     public List<User> getAllUserFriends(int userID) {
         try {
             Session session = HibernateUtil.getSession();
-            List<Integer> friendIDs = session.createNativeQuery
-                    ("SELECT FriendID FROM FriendsWith where UserID = "+userID+"; ")
+            List<BigInteger> friendIDs = session.createNativeQuery
+                    ("select distinct IF(UserID <> "+userID+",UserID,FriendID) " +
+                            "from FriendsWith WHERE UserID = "+userID+" or FriendID = "+userID+";")
                     .getResultList();
 
             List<User> friendsList = new ArrayList<User>();
@@ -71,8 +74,8 @@ public class FriendsWithDao implements Dao<FriendsWith>, IFriendsWithDao {
             if (!friendIDs.isEmpty()) {
                 UserDao dao = new UserDao();
                 for (int i = 0; i < friendIDs.size(); i++) {
-                    User tmpUser = dao.get(friendIDs.get(i));
-                    friendsList.add(tmpUser);
+                    User tmp1User = dao.get(friendIDs.get(i).intValue());
+                    friendsList.add(tmp1User);
                 }
             }
 
