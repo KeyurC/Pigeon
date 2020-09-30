@@ -3,14 +3,19 @@ Template provided by https://bootsnipp.com/snippets/1ea0N
 By Sunil8107
 */
 
+::-webkit-scrollbar {
+  width: 0px;  /* Remove scrollbar space */
+  background: transparent;  /* Optional: just make scrollbar invisible */
+}
+
 .inbox_people {
   background: #f8f8f8 none repeat scroll 0 0;
   float: left;
   overflow: hidden;
   width: 25%; border-right:1px solid #c4c4c4;
+  height: 100vh;
 }
 .inbox_msg {
-  border: 1px solid #c4c4c4;
   clear: both;
   overflow: hidden;
 }
@@ -66,4 +71,4 @@ By Sunil8107
   margin: 0;
   padding: 18px 16px 10px;
 }
-.inbox_chat { height: 97vh; overflow-y: scroll;}
+.inbox_chat { overflow-y: scroll;}

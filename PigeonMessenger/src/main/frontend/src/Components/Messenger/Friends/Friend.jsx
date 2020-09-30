@@ -1,20 +1,7 @@
 import React, { Component } from "react";
-import { FaGripLinesVertical, FaUserPlus } from "react-icons/fa";
-import "./Messenger.css";
 
 class Friend extends Component {
   state = {};
-
-  addFriendIconHandler() {
-    if (this.props.isFriend !== 1) {
-      return (
-        <React.Fragment>
-          <FaUserPlus />
-        </React.Fragment>
-      );
-    }
-  }
-
 
 
   render() {
@@ -25,7 +12,7 @@ class Friend extends Component {
             <div className="chat_ib">
               <h5>
                 {this.props.name}
-                <span onClick={() => this.props.onAddFriend(this.props.id)} className="chat_date">{this.addFriendIconHandler()}</span>
+                <span></span>
               </h5>
               {/* <p>{this.props.msg}</p> */}
               <p>Test</p>
