@@ -66,4 +66,26 @@ public class UserControllerTest {
 
     }
 
+    @Test
+    public void searchUser() {
+        String username = "test";
+        try {
+            User user = new User();
+
+            user.setUser_name(username);
+            MockHttpServletResponse result = this.mockMvc.perform(get("/searchUsers")
+                    .param("username", username)
+                    .param("friend",username))
+                    .andReturn()
+                    .getResponse();
+
+            assertTrue(result.getContentAsString().contains("test")
+                    & result.getContentAsString().length() > 2);
+        } catch (Exception e) {
+            logger.error("searchUser: MockMVC failed to get " +
+                    "or retrieve a list of similar users",e);
+
+        }
+
+    }
 }
