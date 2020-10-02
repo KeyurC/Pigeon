@@ -23,6 +23,10 @@ public class FriendsWith {
     @Column(name = "status")
     private int friendStatus;
 
+    public int getId() {
+        return id;
+    }
+
     public int getFriendID() {
         return friendID;
     }
