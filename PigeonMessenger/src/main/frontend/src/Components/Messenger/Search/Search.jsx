@@ -1,5 +1,6 @@
-import React, { Component, useState } from "react";
+import React, { Component } from "react";
 import SearchItem from "./SearchItem";
+import Axios from 'axios';
 
 import "../Messenger.css";
 
@@ -14,10 +15,20 @@ class Search extends Component {
   }
 
   handleAddFriend = id => {
-    console.log(id);
-    console.log(this.props.user);
-  };
-
+    Axios.post("http://localhost:8080/addFriend", {
+      params: {
+        username: this.props.user,
+        friendID: id
+      }
+    }).then(
+      res => {
+  
+      },
+      err => {
+        console.log(JSON.stringify(err));
+      }
+    );
+    }
   returnFriendComponents() {
     return (
       <React.Fragment>
