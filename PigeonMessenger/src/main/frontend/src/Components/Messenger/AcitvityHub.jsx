@@ -3,6 +3,7 @@ import Friends from "./Friends/Friends";
 import FriendSearch from "./Search/SearchBar";
 import Requests from "./FriendRequests/Requests";
 import Search from "./Search/Search";
+import Axios from 'axios';
 
 import "./Messenger.css";
 
@@ -11,9 +12,63 @@ class FriendHub extends Component {
     friendOpen: true,
     requestOpen: true,
     friendsList: [],
-    searchList: []
+    searchList: [],
+    requests: []
   };
 
+  getFriends = () => {
+    const user = this.props.user;
+    console.log(user);
+    Axios.get("http://localhost:8080/getAllFriends", {
+      params: {
+        username: user
+      }
+    }).then(
+      res => {
+        let friends = res.data;
+        const friendsList = [];
+
+        for (let i = 0; i < friends.length; i++) {
+          let friend = friends[i].split(",");
+          let friendJson = {
+            id: friend[0],
+            name: friend[1]
+          };
+          friendsList.push(friendJson);
+        }
+        this.setState( {friendsList} );
+      },
+      err => {
+        console.log(err);
+      }
+    );
+  }
+
+  getRequests = () => {
+    Axios.get("http://localhost:8080/getFriendRequests", {
+      params: {
+        username: this.props.user
+      }
+    }).then(
+      res => {
+        let requests = [];
+        const postRequests = res.data;
+        for (let i =0; i < postRequests.length; i++) {
+          requests.push(postRequests[i]);
+        }
+        this.setState({requests});
+
+      },
+      err => {
+        console.log(JSON.stringify(err));
+      }
+    );
+  }
+
+  updateComponents = () => {
+    this.getRequests();
+    this.getFriends();
+  }
 
   isSearching() {
     if (this.state.searchList.length === 0) {
@@ -24,6 +79,9 @@ class FriendHub extends Component {
           </div>
           <div className="inbox_chat">
             <Requests
+              updateComponents={this.updateComponents}
+              onRequests={this.getRequests}
+              requests={this.state.requests}
               requestOpen={this.state.requestOpen}
               user={this.props.user}
             />
@@ -33,10 +91,10 @@ class FriendHub extends Component {
           </div>
           <div className="inbox_chat">
             <Friends
-              updateFriendsList={this.updateFriendsList}
               friendsList={this.state.friendsList}
               user={this.props.user}
               friendOpen={this.state.friendOpen}
+              reloadFriends={this.getFriends}
             />
           </div>
         </React.Fragment>
@@ -62,10 +120,6 @@ class FriendHub extends Component {
     } else {
       this.setState({ friendOpen: true });
     }
-  };
-
-  updateFriendsList = friendsList => {
-    this.setState({ friendsList });
   };
 
   updateSearch = searchList => {
