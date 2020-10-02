@@ -2,18 +2,24 @@ import React, { Component } from "react";
 import Request from "./Request";
 
 class Requests extends Component {
-  state = {
-    requests: [{ id: 1, name: "test" }]
-  };
+  state = {};
 
-  componentDidMount() {}
+  componentDidMount() {
+    this.props.onRequests();
+  }
 
   requestDivHandler() {
     if (this.props.requestOpen) {
       return (
         <React.Fragment>
-          {this.state.requests.map(requests => (
-            <Request key={requests.id} name={requests.name} id={requests.id} />
+          {this.props.requests.map(requests => (
+            <Request
+              key={requests.user_id}
+              user={this.props.user}
+              name={requests.user_name}
+              id={requests.user_id}
+              updateComponents={this.props.updateComponents}
+            />
           ))}
         </React.Fragment>
       );
