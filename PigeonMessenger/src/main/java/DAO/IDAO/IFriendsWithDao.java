@@ -27,4 +27,12 @@ public interface IFriendsWithDao {
      * @return List of User
      */
     List<User> getAllUserFriends(int userID);
+
+    /**
+     * Method returns a list of Users, who are friends
+     * with the user provided.
+     * @param userID Identifier of user
+     * @return  List of User Objects
+     */
+    List<User> getFriendRequests(int userID);
 }

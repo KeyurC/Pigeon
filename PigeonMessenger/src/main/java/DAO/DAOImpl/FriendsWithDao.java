@@ -32,7 +32,7 @@ public class FriendsWithDao implements Dao<FriendsWith>, IFriendsWithDao {
                 logger.error("Failed to save friend relationship",ex);
             };
         } else {
-            logger.warn("Friend relationship already exists");
+            logger.info("Friend relationship already exists");
         }
     }
 
@@ -48,13 +48,14 @@ public class FriendsWithDao implements Dao<FriendsWith>, IFriendsWithDao {
             Session session = HibernateUtil.getSession();
             FriendsWith request =
                     session.createNativeQuery
-                            ("SELECT * FROM FriendsWith where UserID = "+userID+" and FriendID = "+friendID+"; ",
+                            ("SELECT * FROM FriendsWith where (UserID = "+userID+" and FriendID = "+friendID+") " +
+                                            "or (UserID = "+friendID+" and FriendID = "+userID+");",
                                     FriendsWith.class)
                             .getSingleResult();
 
             return request;
         } catch (NoResultException e) {
-            logger.error("Friendship pair does not exist" ,e);
+            logger.info("Friendship pair does not exist" );
             return null;
         }
     }
@@ -66,7 +67,7 @@ public class FriendsWithDao implements Dao<FriendsWith>, IFriendsWithDao {
             Session session = HibernateUtil.getSession();
             List<BigInteger> friendIDs = session.createNativeQuery
                     ("select distinct IF(UserID <> "+userID+",UserID,FriendID) " +
-                            "from FriendsWith WHERE UserID = "+userID+" or FriendID = "+userID+";")
+                            "from FriendsWith WHERE ( UserID = "+userID+" or FriendID = "+userID+") and status = 1;")
                     .getResultList();
 
             List<User> friendsList = new ArrayList<User>();
@@ -87,6 +88,29 @@ public class FriendsWithDao implements Dao<FriendsWith>, IFriendsWithDao {
     }
 
     @Override
+    public List<User> getFriendRequests(int userID) {
+        try {
+            String sql = "select * from FriendsWith where FriendID = "+userID+" and status = 0;";
+            Session session = HibernateUtil.getSession();
+            List<FriendsWith> requests = session.createNativeQuery(sql,FriendsWith.class).getResultList();
+
+            List<User> users = new ArrayList<User>();
+            UserDao userDao = new UserDao();
+
+            for (FriendsWith f : requests) {
+                User tmp = userDao.get(f.getUserID());
+                users.add(tmp);
+            }
+
+            return users;
+
+        } catch (Exception e) {
+            logger.error("getFriendRequests: Failed to retrieve all friend requests " + e );
+            return null;
+        }
+    }
+
+    @Override
     public void update(FriendsWith friend) {
         Session session = HibernateUtil.getSession();
         session.update(friend);
@@ -96,6 +120,14 @@ public class FriendsWithDao implements Dao<FriendsWith>, IFriendsWithDao {
 
     @Override
     public void delete(FriendsWith friendsWith) {
-
+        String sql = "DELETE FROM FriendsWith WHERE ID = "+friendsWith.getId()+";";
+        try {
+            Session session = HibernateUtil.getSession();
+            session.delete(friendsWith);
+            Transaction transaction = session.beginTransaction();
+            transaction.commit();
+        } catch (Exception e) {
+            logger.error("Delete: Failed to delete object from database",e);
+        }
     }
 }
