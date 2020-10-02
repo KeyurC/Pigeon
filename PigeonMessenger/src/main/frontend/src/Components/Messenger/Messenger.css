@@ -15,6 +15,7 @@ By Sunil8107
   width: 25%; border-right:1px solid #c4c4c4;
   height: 100vh;
 }
+
 .inbox_msg {
   clear: both;
   overflow: hidden;
@@ -28,6 +29,7 @@ By Sunil8107
 }
 
 .chat_date {
+  margin-left: 15px;;
   font-size: 20px !important;
 }
 
@@ -69,6 +71,6 @@ By Sunil8107
 .chat_list {
   border-bottom: 1px solid #c4c4c4;
   margin: 0;
-  padding: 18px 16px 10px;
+  padding: 18px 0px 16px 10px;
 }
 .inbox_chat { overflow-y: scroll;}
