@@ -6,7 +6,7 @@ class FriendSearch extends Component {
 
   handleFriendsSearch = () => {
     let friend = document.getElementById("search").value;
-    if (friend == "") {
+    if (friend === "") {
       this.props.revert();
     } else {
       Axios.get("http://localhost:8080/searchUsers", {

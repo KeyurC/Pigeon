@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { FaGripLinesVertical, FaUserPlus } from "react-icons/fa";
+import { FaUserPlus } from "react-icons/fa";
 
 class SearchItem extends Component {
   state = {};
@@ -29,7 +29,7 @@ class SearchItem extends Component {
                   {this.addFriendIconHandler()}
                 </span>
               </h5>
-              <p>{this.props.isFriend == 1 ? "text" : "Add user as friend."}</p>
+              <p>{this.props.isFriend === 1 ? "text" : "Add user as friend."}</p>
             </div>
           </div>
         </div>
