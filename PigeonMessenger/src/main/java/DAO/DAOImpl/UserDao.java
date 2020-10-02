@@ -4,18 +4,16 @@ import DAO.IDAO.Dao;
 import DAO.IDAO.IUserDao;
 import Hibernate.HibernateUtil;
 import Model.User;
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import javax.persistence.NoResultException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 public class UserDao implements Dao<User>, IUserDao {
-    private Logger logger = Logger.getAnonymousLogger();
+    private Logger logger = Logger.getLogger(UserDao.class);
 
     @Override
     public void save(Model.User e) {
@@ -27,7 +25,7 @@ public class UserDao implements Dao<User>, IUserDao {
             Transaction transaction = session.beginTransaction();
             transaction.commit();
         } else {
-            logger.log(Level.INFO, "User already exists");
+            logger.warn("User already exists");
         }
     }
 
@@ -49,22 +47,23 @@ public class UserDao implements Dao<User>, IUserDao {
 
             return user;
         } catch (NoResultException e) {
-            logger.log(Level.INFO, "User does not exist");
+            logger.warn("User does not exist");
             return null;
         }
 
     }
 
+    @Override
     public List<User> getUserList(String username) {
         try {
             Session session = HibernateUtil.getSession();
             List<User> similarUsernames = session.createNativeQuery(
                     "select * from User where userName like '%"+username+"%';"
             ,User.class).getResultList();
-            
+
             return similarUsernames;
         } catch (NoResultException e) {
-            logger.log(Level.INFO, "User does not exist");
+            logger.error("User does not exist or no similar users" ,e);
             return null;
         }
     }
