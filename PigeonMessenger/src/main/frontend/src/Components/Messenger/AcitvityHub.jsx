@@ -11,63 +11,12 @@ class FriendHub extends Component {
   state = {
     friendOpen: true,
     requestOpen: true,
-    friendsList: [],
-    searchList: [],
-    requests: []
+    searchList: []
   };
 
-  getFriends = () => {
-    const user = this.props.user;
-    console.log(user);
-    Axios.get("http://localhost:8080/getAllFriends", {
-      params: {
-        username: user
-      }
-    }).then(
-      res => {
-        let friends = res.data;
-        const friendsList = [];
-
-        for (let i = 0; i < friends.length; i++) {
-          let friend = friends[i].split(",");
-          let friendJson = {
-            id: friend[0],
-            name: friend[1]
-          };
-          friendsList.push(friendJson);
-        }
-        this.setState( {friendsList} );
-      },
-      err => {
-        console.log(err);
-      }
-    );
-  }
-
-  getRequests = () => {
-    Axios.get("http://localhost:8080/getFriendRequests", {
-      params: {
-        username: this.props.user
-      }
-    }).then(
-      res => {
-        let requests = [];
-        const postRequests = res.data;
-        for (let i =0; i < postRequests.length; i++) {
-          requests.push(postRequests[i]);
-        }
-        this.setState({requests});
-
-      },
-      err => {
-        console.log(JSON.stringify(err));
-      }
-    );
-  }
 
   updateComponents = () => {
-    this.getRequests();
-    this.getFriends();
+    this.props.onUpdate();
   }
 
   isSearching() {
@@ -80,8 +29,9 @@ class FriendHub extends Component {
           <div className="inbox_chat">
             <Requests
               updateComponents={this.updateComponents}
-              onRequests={this.getRequests}
-              requests={this.state.requests}
+              onRequests={this.props.onRequests}
+              onFriends={this.props.getFriends}
+              requests={this.props.requests}
               requestOpen={this.state.requestOpen}
               user={this.props.user}
             />
@@ -91,17 +41,20 @@ class FriendHub extends Component {
           </div>
           <div className="inbox_chat">
             <Friends
-              friendsList={this.state.friendsList}
+              friendsList={this.props.friendsList}
               user={this.props.user}
               friendOpen={this.state.friendOpen}
-              reloadFriends={this.getFriends}
+              reloadFriends={this.props.getFriends}
             />
           </div>
         </React.Fragment>
       );
     } else {
       return (
-        <Search searchList={this.state.searchList} user={this.props.user} />
+        <Search 
+        searchList={this.state.searchList} 
+        user={this.props.user}
+        revert={this.revertState} />
       );
     }
   }
@@ -136,6 +89,7 @@ class FriendHub extends Component {
       searchList: []
     });
   };
+
 
   render() {
     return (
