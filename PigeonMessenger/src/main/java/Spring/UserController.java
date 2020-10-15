@@ -1,4 +1,4 @@
-package Controllers;
+package Spring;
 
 import DAO.DAOImpl.FriendsWithDao;
 import DAO.DAOImpl.UserDao;
@@ -22,7 +22,7 @@ public class UserController {
     @ResponseBody
     public String userCreation(@RequestBody String userJSON) {
         ObjectMapper mapper = new ObjectMapper();
-
+        
         try {
             User user = mapper.readValue(userJSON,User.class);
             UserImpl.createUser(user);
