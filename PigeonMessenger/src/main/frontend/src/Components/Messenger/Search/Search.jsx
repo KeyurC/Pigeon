@@ -15,15 +15,14 @@ class Search extends Component {
   }
 
   handleAddFriend = id => {
+    //this.props.revert();
     Axios.post("http://localhost:8080/addFriend", {
       params: {
         username: this.props.user,
         friendID: id
       }
     }).then(
-      res => {
-  
-      },
+      res => {},
       err => {
         console.log(JSON.stringify(err));
       }
