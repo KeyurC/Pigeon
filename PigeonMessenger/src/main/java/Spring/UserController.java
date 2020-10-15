@@ -1,4 +1,4 @@
-package Spring;
+package Controllers;
 
 import DAO.DAOImpl.FriendsWithDao;
 import DAO.DAOImpl.UserDao;

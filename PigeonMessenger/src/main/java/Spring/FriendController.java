@@ -1,4 +1,4 @@
-package Spring;
+package Controllers;
 
 import DAO.DAOImpl.FriendsWithDao;
 import DAO.DAOImpl.UserDao;
@@ -18,6 +18,7 @@ public class FriendController {
     private static FriendsWithDao friendsDAO = new FriendsWithDao();
     private static UserDao userDAO = new UserDao();
     private static Logger logger = Logger.getLogger(FriendController.class);
+
 
     @RequestMapping(value = "/acceptRequest", method = RequestMethod.POST)
     @ResponseBody
