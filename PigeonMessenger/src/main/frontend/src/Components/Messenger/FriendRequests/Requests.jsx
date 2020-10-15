@@ -18,6 +18,8 @@ class Requests extends Component {
               user={this.props.user}
               name={requests.user_name}
               id={requests.user_id}
+              updateFriends={this.props.onFriends}
+              updateRequests={this.props.onRequests}
               updateComponents={this.props.updateComponents}
             />
           ))}

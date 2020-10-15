@@ -13,7 +13,8 @@ class Request extends Component {
       }
     }).then(
       res => {
-        this.props.updateComponents();
+        this.props.updateRequests();
+        this.props.updateFriends();
       },
       err => {
         console.log(JSON.stringify(err));
@@ -22,7 +23,6 @@ class Request extends Component {
   };
 
   declineRequest = () => {
-    console.log("decline");
     Axios.post("http://localhost:8080/declineRequest", {
       params: {
         username: this.props.user,
@@ -30,7 +30,7 @@ class Request extends Component {
       }
     }).then(
       res => {
-      
+        this.props.updateRequests();
       },
       err => {
         console.log(JSON.stringify(err));
